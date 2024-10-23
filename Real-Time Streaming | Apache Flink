@@ -1,0 +1,8 @@
+StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+DataStream<String> stream = env.readTextFile("path_to_real_time_data");
+
+stream.keyBy(route -> route.get("route_id"))
+      .timeWindow(Time.seconds(10))
+      .reduce((r1, r2) -> r1.get("travel_time") < r2.get("travel_time") ? r1 : r2);
+
+env.execute("Real-time Route Optimization");
