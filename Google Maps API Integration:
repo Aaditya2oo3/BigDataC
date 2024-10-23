@@ -1,0 +1,7 @@
+import googlemaps
+
+gmaps = googlemaps.Client(key='YOUR_API_KEY')
+
+def get_route_data(origin, destination):
+    directions = gmaps.directions(origin, destination, mode="driving", traffic_model="best_guess")
+    return directions
