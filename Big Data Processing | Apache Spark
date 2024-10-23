@@ -1,0 +1,12 @@
+Apache Spark for Batch Processing:
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder.appName("EVRouteOptimization").getOrCreate()
+traffic_data = spark.readStream.json("path_to_real_time_data")
+traffic_data.createOrReplaceTempView("traffic_view")
+
+optimized_routes = spark.sql("""
+    SELECT route_id, MIN(travel_time)
+    FROM traffic_view
+    GROUP BY route_id
+""")
